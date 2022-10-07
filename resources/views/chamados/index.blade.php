@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-3">
+    <div class="py-3 flex h-screen justify-center items-center">
         @if (session()->has('success'))
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-3" role="alert">
                 <span class="block sm:inline">{{ session()->get('success') }}</span>
@@ -18,7 +18,7 @@
             </div>
         @endif
 
-        <div class="grid grid-cols-12">
+        <div class="grid grid-cols-12 gap-8">
             <div class="col-span-12 lg:col-span-3 py-2 lg:py-0">
                 <div class="max-w-1xl sm:px-6 lg:px-3">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-3">
