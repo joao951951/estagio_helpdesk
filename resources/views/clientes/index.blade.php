@@ -29,8 +29,8 @@
                     </form>
 
                     @if (count($clients) > 0)
-                        <div class='overflow-x-auto w-full py-2'>
-                            <table class='mx-auto max-w-7xl w-full whitespace-nowrap rounded-lg bg-white divide-y divide-gray-300 overflow-hidden'>
+                        <div class='overflow-x-auto relative shadow-md sm:rounded-lg py-2'>
+                            <table class='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
                                 <thead class="bg-gray-500">
                                     <tr class="text-white text-left">
                                         {{-- <form action="" id="order-form">
