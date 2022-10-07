@@ -6,17 +6,7 @@
     </x-slot>
 
     <div class="py-3 flex h-screen justify-center items-center">
-        @if (session()->has('success'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-3" role="alert">
-                <span class="block sm:inline">{{ session()->get('success') }}</span>
-            </div>
-        @endif
 
-        @if (session()->has('error'))
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-3" role="alert">
-                <span class="block sm:inline">{{ session()->get('error') }}</span>
-            </div>
-        @endif
 
         <div class="grid grid-cols-12 gap-8">
             <div class="col-span-12 lg:col-span-3 py-2 lg:py-0">
@@ -69,6 +59,17 @@
 
             <div class="col-span-12 lg:col-span-9">
                 <div class="max-w-7xl mr-2">
+                @if (session()->has('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-3" role="alert">
+                <span class="block sm:inline">{{ session()->get('success') }}</span>
+            </div>
+        @endif
+
+        @if (session()->has('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-3" role="alert">
+                <span class="block sm:inline">{{ session()->get('error') }}</span>
+            </div>
+        @endif
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 bg-white border-b border-gray-200">
                             <form action="{{ route('chamados.create') }}">
@@ -94,8 +95,11 @@
 
                                                 <th class="font-semibold text-sm uppercase px-6 py-4">Cliente</th>
                                                 <th class="font-semibold text-sm uppercase px-6 py-4">Título</th>
-                                                <th class="font-semibold text-sm uppercase px-6 py-4 text-center hover:bg-gray-800 hover:cursor-pointer"  onclick="sendOrder('priority');">
+                                                <!-- <th class="font-semibold text-sm uppercase px-6 py-4 text-center hover:bg-gray-800 hover:cursor-pointer"  onclick="sendOrder('priority');">
                                                     Prioridade @if ($orderColumn == 'priority') @if ($order == 'ASC') &#129045; @else &#129047; @endif @endif
+                                                </th> -->
+                                                <th class="font-semibold text-sm uppercase px-6 py-4">
+                                                    Prioridade
                                                 </th>
                                                 <th class="font-semibold text-sm uppercase px-6 py-4 text-center hover:bg-gray-800 hover:cursor-pointer"  onclick="sendOrder('status');">
                                                     Status @if ($orderColumn == 'status') @if ($order == 'ASC') &#129045; @else &#129047; @endif @endif
@@ -122,7 +126,13 @@
                                                         <p class="">{{ $ticket->title }}</p>
                                                     </td>
 
-                                                    <td class="px-6 py-4 text-center">{{ $ticket->priority }}</td>
+                                                    @if($ticket->priority_id == 1)
+                                                        <td class="px-6 py-4 text-center">Baixa</td>
+                                                    @elseif($ticket->priority_id == 2)
+                                                        <td class="px-6 py-4 text-center">Urgente</td>
+                                                    @else
+                                                        <td class="px-6 py-4 text-center">Emergente</td>
+                                                    @endif
 
                                                     <td class="px-6 py-4 text-center">
                                                         <span class="text-white text-sm w-1/3 pb-1 font-semibold px-2 rounded-full

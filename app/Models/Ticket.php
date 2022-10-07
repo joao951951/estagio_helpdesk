@@ -10,7 +10,7 @@ class Ticket extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'priority', 'status', 'client_id', 'employee_id', 'claimed_defect', 'found_defect', 'service_performed', 'swap_parts'];
+    protected $fillable = ['title', 'priority_id', 'status', 'client_id', 'employee_id', 'claimed_defect', 'found_defect', 'service_performed', 'swap_parts'];
 
     public function client()
     {

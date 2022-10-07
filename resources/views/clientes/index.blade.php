@@ -40,7 +40,7 @@
 
                                         <th class="font-semibold text-sm uppercase px-6 py-4">Nome</th>
                                         <th class="font-semibold text-sm uppercase px-6 py-4">E-mail</th>
-                                        <th class="font-semibold text-sm uppercase px-6 py-4">Tipo Contrato</th>
+                                        <th class="font-semibold text-sm uppercase px-6 py-4">Contato</th>
                                         <th class="font-semibold text-sm uppercase px-6 py-4">Ação</th>
                                     </tr>
                                 </thead>
@@ -61,7 +61,7 @@
                                                 <p class="">{{ $client->email }}</p>
                                             </td>
 
-                                            <td class="px-6 py-4">{{ $client->contract }}</td>
+                                            <td class="px-6 py-4">{{ $client->phone }}</td>
 
                                             <td class="px-6 py-4" onclick="edit({{ $key }})">
                                                 <span class="text-purple-800 hover:underline hover:cursor-pointer">Editar<span>

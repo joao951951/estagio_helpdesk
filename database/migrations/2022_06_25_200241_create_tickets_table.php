@@ -17,17 +17,18 @@ class CreateTicketsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('employee_id')->nullable();
-            $table->string('tittle');
+            $table->string('title');
             $table->text('claimed_defect'); // Defeito reclamado
             $table->text('found_defect')->nullable(); // Defeito constatado
             $table->text('service_performed')->nullable();
             $table->text('swap_parts')->nullable();
-            $table->string('priority');
+            $table->unsignedBigInteger('priority_id');
             $table->string('status');
             $table->timestamps();
 
             $table->foreign('client_id')->references('id')->on('clients');
             $table->foreign('employee_id')->references('id')->on('employees');
+            $table->foreign('priority_id')->references('id')->on('priorities');
         });
     }
 

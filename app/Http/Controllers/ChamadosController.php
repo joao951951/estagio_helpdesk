@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobs\MailTicketToClient;
 use App\Models\Client;
 use App\Models\Employee;
+use App\Models\Priority;
 use App\Models\Order;
 use App\Models\Ticket;
 use Carbon\Carbon;
@@ -71,8 +72,9 @@ class ChamadosController extends Controller
     {
         $clients = Client::all();
         $employees = Employee::all();
+        $priorities = Priority::all();
 
-        return view('chamados.create', compact(['clients', 'employees']));
+        return view('chamados.create', compact(['clients', 'employees', 'priorities']));
     }
 
     /**
@@ -118,8 +120,9 @@ class ChamadosController extends Controller
     public function edit(Ticket $ticket)
     {
         $employees = Employee::all();
+        $priorities = Priority::all();
 
-        return view('chamados.edit', compact(['ticket', 'employees']));
+        return view('chamados.edit', compact(['ticket', 'employees', 'priorities']));
     }
 
     /**
