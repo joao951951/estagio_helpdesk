@@ -99,10 +99,16 @@ class FuncionarioController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Employee $employee)
-    {
+    {    
+        // dd($employee);
         $data = $request->except(['_token', '_method']);
+        $user = User::find($employee['user_id']);
+        // dd($data);
 
         $employee->update($data);
+        $user->update([
+            'password' => bcrypt($data['password'])
+        ]);
 
         return redirect()->route('funcionarios.index')->with([
             'success' => "As informações {$employee->name} foram atualizadas com sucesso"

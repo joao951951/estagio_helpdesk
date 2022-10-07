@@ -29,7 +29,7 @@
                             </label>
 
                             <input
-                                {{-- border border-red-500 --}}
+                                {{-- border-red-500 --}}
                                 class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
                                 id="name"
                                 type="text"
@@ -86,6 +86,20 @@
                         </div>
 
                         <div class="col-span-6">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="password">
+                                Senha
+                            <input
+                                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                id="password"
+                                type="password"
+                                placeholder="Digite a nova Senha"
+                                name="password"
+                                value="{{ $user->password }}"
+                                required
+                            >
+                        </div>
+
+                        <div class="col-span-6">
                             <div class="grid grid-cols-5">
                                 <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-3 col-span-5 lg:col-start-1 lg:col-end-2">
                                     Salvar
@@ -94,7 +108,6 @@
                                 <button
                                     type="button"
                                     class="bg-blue-200 hover:bg-blue-700 hover:text-white text-black font-bold py-2 px-4 rounded mb-3 col-span-5 lg:col-start-2 lg:col-end-3 lg:ml-3"
-                                    onclick="document.getElementById('change-password-form').submit();"
                                 >
                                     Mudar Senha
                                 </button>

@@ -24,7 +24,7 @@
                             </label>
 
                             <input
-                                {{-- border border-red-500 --}}
+                                {{-- border-red-500 --}}
                                 class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
                                 id="name"
                                 type="text"
@@ -50,7 +50,7 @@
                             >
                         </div>
 
-                        <div class="col-span-6 lg:col-span-3">
+                        <!-- <div class="col-span-6 lg:col-span-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="insc">
                                 Inscrição Estadual
                             </label>
@@ -63,7 +63,7 @@
                                 name="insc"
                                 required
                             >
-                        </div>
+                        </div> -->
 
                         <div class="col-span-6 lg:col-span-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email">
@@ -125,7 +125,7 @@
                             >
                         </div>
 
-                        <div class="col-span-6 lg:col-span-3">
+                        <!-- <div class="col-span-6 lg:col-span-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="contrato">
                                 Contrato
                             </label>
@@ -144,7 +144,7 @@
                                     <option value="contrato4">Contrato 4 - Cliente avulso, algumas vezes atendemos</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="col-span-6">
                             <div class="grid grid-cols-5">

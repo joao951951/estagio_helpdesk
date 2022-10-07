@@ -38,7 +38,7 @@
                             </label>
 
                             <input
-                                {{-- border border-red-500 --}}
+                                {{-- border-red-500 --}}
                                 class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
                                 id="password"
                                 type="password"

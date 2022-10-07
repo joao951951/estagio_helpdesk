@@ -17,7 +17,7 @@ class CreateTicketsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('employee_id')->nullable();
-            $table->string('title');
+            $table->string('tittle');
             $table->text('claimed_defect'); // Defeito reclamado
             $table->text('found_defect')->nullable(); // Defeito constatado
             $table->text('service_performed')->nullable();

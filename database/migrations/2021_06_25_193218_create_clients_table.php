@@ -18,11 +18,11 @@ class CreateClientsTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('cnpj')->unique();
-            $table->string('contract');
+            // $table->string('contract');
             $table->string('address');
             $table->string('city');
             $table->string('phone');
-            $table->string('insc');
+            // $table->string('insc');
             $table->timestamps();
         });
     }
