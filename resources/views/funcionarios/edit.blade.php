@@ -107,12 +107,12 @@
                                     Salvar
                                 </button>
 
-                                <button
+                                <!-- <button
                                     type="button"
                                     class="bg-blue-200 hover:bg-blue-700 hover:text-white text-black font-bold py-2 px-4 rounded mb-3 col-span-5 lg:col-start-2 lg:col-end-3 lg:ml-3"
                                 >
                                     Mudar Senha
-                                </button>
+                                </button> -->
 
                                 <button
                                     type="button"
