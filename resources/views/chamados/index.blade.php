@@ -56,8 +56,10 @@
                                                 </div>
                                             </td>
 
-                                            <td class="px-6 py-4">  
-                                                <p class="">{{ $ticket->title }}</p>
+                                            <td class="px-6 py-4">
+                                                <a class="text-purple-800 hover:underline hover:cursor-pointer" href="{{ route('chamados.historyticket', [$ticket->id]) }}">    
+                                                    <p class="">{{ $ticket->title }}</p>
+                                                </a>  
                                             </td>
 
                                             @if($ticket->priority_id == 1)

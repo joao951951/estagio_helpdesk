@@ -8,6 +8,7 @@ use App\Models\Employee;
 use App\Models\Priority;
 use App\Models\Order;
 use App\Models\Ticket;
+use App\Models\Ticket_employee;
 use App\Models\Status;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -113,6 +114,41 @@ class ChamadosController extends Controller
         return view('chamados.history', compact(['finalDate', 'initialDate', 'order', 'orderColumn', 'tickets']));
     }
 
+    public function historyTicket(Ticket $ticket)
+    {
+        $changes = " ";
+
+        $employee = Employee::where('id', '=', $ticket->employee_id)->get();
+        $employee = $employee->get(0);
+
+        $client = Client::where('id', '=', $ticket->client_id)->get();
+        $client = $client->get(0);
+
+        $history_ticket = Ticket_employee::where('ticket_id', $ticket->id)->get();
+        foreach ($history_ticket as $key => $ticket_updated){
+            if($ticket_updated->employee_id != $ticket_updated->employee_id_old){
+
+                $employee_old = Employee::where('id', '=', $ticket->employee_id_old)->get();
+                $employee_old = $employee_old->first();
+
+                $employee = Employee::where('id', '=', $ticket->employee_id)->get();
+                $employee = $employee->first();
+
+                if(isset($employee_old)){
+                    $changes = "Chamado repassado para $employee->name responsável anteriormente era $employee_old->name";
+                }else{
+                    $changes = "Chamado repassado para $employee->name antes não estava com ninguém";
+                }
+                // dd($changes);
+            } 
+        }
+
+
+        // dd($history_ticket);
+
+        return view('chamados.history_ticket', compact('ticket', 'employee', 'client', 'history_ticket', 'changes'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -133,13 +169,32 @@ class ChamadosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){ 
+
+        $user_name = Auth::user()->name;
+        $user_email = Auth::user()->email;
+
+
         $data = $request->except('_token');
 
         $data['status'] = '1';
 
         $ticket = $this->ticket->create($data);
+
+        $ticket_history = Ticket::latest()->first();
+
+        Ticket_employee::create([
+            'employee_id' => $ticket_history->employee_id,
+            'ticket_id' => $ticket_history->id,
+            'title_new' => $ticket_history->title,
+            'claimed_defect_new' => $ticket_history->claimed_defect,
+            'found_defect_new' => $ticket_history->found_defect,
+            'service_performed_new' => $ticket_history->service_performed,
+            'swap_parts_new' => $ticket_history->swap_parts,
+            'priority_id_new' => $ticket_history->priority_id,
+            'status_new' => $ticket_history->status,
+            'descri' => "Chamado Criado por $user_name com email $user_email",
+            ]);
 
         return redirect()->route('chamados.index')->with([
             'success' => "{$ticket->title} foi criado com sucesso"
@@ -181,21 +236,93 @@ class ChamadosController extends Controller
      */
     public function update(Request $request, Ticket $ticket)
     {
+        $user_name = Auth::user()->name;
+        $user_email = Auth::user()->email;
+
+        $ticket_old = Ticket::find($ticket->id);
+
         $data = $request->except(['_token', '_method']);
 
         $ticket->update($data);
+        // dd($ticket_old);
 
-        // if ($ticket->status == 'fechado') {
-        //     Order::create([
-        //         'client_id' => $ticket->client_id,
-        //         'ticket_id' => $ticket->id
-        //     ]);
+        if($ticket_old->status != $ticket->status){
+            $status_var = [
+                "1" => "Aberto",
+                "2" => "Em Andamento",
+                "3" => "Visita Técnica",
+                "4" => "Fechado",
+            ];
+            if ($data['status'] == 4) {
+                Ticket_employee::create([
+                    'ticket_id' => $ticket->id,
+                    'employee_id_old' => $ticket_old->employee_id,
+                    'title_old' => $ticket_old->title,
+                    'claimed_defect_old' => $ticket_old->claimed_defect,
+                    'found_defect_old' => $ticket_old->found_defect,
+                    'service_performed_old' => $ticket_old->service_performed,
+                    'swap_parts_old' => $ticket_old->swap_parts,
+                    'priority_id_old' => $ticket_old->priority_id,
+                    'status_old' => $ticket_old->status,
+                    'employee_id' => $data['employee_id'],
+                    'title_new' => $data['title'],
+                    'claimed_defect_new' => $data['claimed_defect'],
+                    'found_defect_new' => $data['found_defect'],
+                    'service_performed_new' => $data['service_performed'],
+                    'swap_parts_new' => $data['swap_parts'],
+                    'priority_id_new' => $data['priority_id'],
+                    'status_new' => $data['status'],
+                    'descri' => "Chamado Fechado pelo usuário $user_name com email de $user_email ",
+                    ]);
+            }elseif($data['status'] == 1 && $ticket_old->status == 4){
+                Ticket_employee::create([
+                    'ticket_id' => $ticket->id,
+                    'employee_id_old' => $ticket_old->employee_id,
+                    'title_old' => $ticket_old->title,
+                    'claimed_defect_old' => $ticket_old->claimed_defect,
+                    'found_defect_old' => $ticket_old->found_defect,
+                    'service_performed_old' => $ticket_old->service_performed,
+                    'swap_parts_old' => $ticket_old->swap_parts,
+                    'priority_id_old' => $ticket_old->priority_id,
+                    'status_old' => $ticket_old->status,
+                    'employee_id' => $data['employee_id'],
+                    'title_new' => $data['title'],
+                    'claimed_defect_new' => $data['claimed_defect'],
+                    'found_defect_new' => $data['found_defect'],
+                    'service_performed_new' => $data['service_performed'],
+                    'swap_parts_new' => $data['swap_parts'],
+                    'priority_id_new' => $data['priority_id'],
+                    'status_new' => $data['status'],
+                    'descri' => "Reaberto pelo usuário $user_name com email de $user_email ",
+                ]);
+            }else{
+                $status_old = $status_var[$ticket_old->status];
+                $status_new = $status_var[$data['status']];
 
-            // MailTicketToClient::dispatch($ticket);
-        // }
-
+                Ticket_employee::create([
+                    'ticket_id' => $ticket->id,
+                    'employee_id_old' => $ticket_old->employee_id,
+                    'title_old' => $ticket_old->title,
+                    'claimed_defect_old' => $ticket_old->claimed_defect,
+                    'found_defect_old' => $ticket_old->found_defect,
+                    'service_performed_old' => $ticket_old->service_performed,
+                    'swap_parts_old' => $ticket_old->swap_parts,
+                    'priority_id_old' => $ticket_old->priority_id,
+                    'status_old' => $ticket_old->status,
+                    'employee_id' => $data['employee_id'],
+                    'title_new' => $data['title'],
+                    'claimed_defect_new' => $data['claimed_defect'],
+                    'found_defect_new' => $data['found_defect'],
+                    'service_performed_new' => $data['service_performed'],
+                    'swap_parts_new' => $data['swap_parts'],
+                    'priority_id_new' => $data['priority_id'],
+                    'status_new' => $data['status'],
+                    'descri' => "Mudança de estado estava $status_old e foi para $status_new realizada pelo usuário $user_name com email de $user_email",
+                ]);
+            }
+        }
         return redirect()->route('chamados.index')->with([
-            'success' => "As informações {$ticket->id} foram atualizadas com sucesso"
+            'success' => "As informações de {$ticket->title} foram atualizadas com sucesso"
         ]);
     }
 
@@ -205,8 +332,16 @@ class ChamadosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Ticket $ticket)
     {
-        //
+        $history_ticket = Ticket_employee::where('ticket_id', '=' , $ticket->id);
+
+        dd($history_ticket);
+
+        $ticket->delete();
+
+        return redirect()->route('funcionarios.index')->with([
+            'success' => "{$employee->name} foi excluído com sucesso"
+        ]);
     }
 }
