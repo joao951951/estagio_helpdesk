@@ -40,6 +40,7 @@
 
                                         <th class="font-semibold text-sm uppercase px-6 py-4">Nome</th>
                                         <th class="font-semibold text-sm uppercase px-6 py-4">CPF</th>
+                                        <th class="font-semibold text-sm uppercase px-6 py-4">Contato</th>
                                         <th class="font-semibold text-sm uppercase px-6 py-4">Ação</th>
                                     </tr>
                                 </thead>
@@ -57,6 +58,10 @@
 
                                             <td class="px-6 py-4">
                                                 <p class="">{{ $employee->cpf }}</p>
+                                            </td>
+
+                                            <td class="px-6 py-4">
+                                                <p class="">{{ $employee->phone }}</p>
                                             </td>
 
                                             <td class="px-6 py-4" onclick="edit({{ $key }})">

@@ -39,6 +39,7 @@
                                         </form> --}}
 
                                         <th class="font-semibold text-sm uppercase px-6 py-4">Nome</th>
+                                        <th class="font-semibold text-sm uppercase px-6 py-4">Cnpj</th>
                                         <th class="font-semibold text-sm uppercase px-6 py-4">E-mail</th>
                                         <th class="font-semibold text-sm uppercase px-6 py-4">Contato</th>
                                         <th class="font-semibold text-sm uppercase px-6 py-4">Ação</th>
@@ -52,9 +53,13 @@
                                                 <div class="flex items-center space-x-3">
                                                     <div>
                                                         <p>{{ $client->name }}</p>
-                                                        <p class="text-gray-500 text-sm font-semibold tracking-wide">{{ $client->cnpj }}</p>
+                                                        <p class="text-gray-500 text-sm font-semibold tracking-wide">{{ $client->responsible }}</p>
                                                     </div>
                                                 </div>
+                                            </td>
+
+                                            <td class="px-6 py-4">
+                                                <p class="">{{ $client->cnpj }}</p>
                                             </td>
 
                                             <td class="px-6 py-4">

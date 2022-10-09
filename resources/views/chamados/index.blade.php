@@ -129,19 +129,15 @@
             /* function show(message, key) {
                 const messageBox = $(`#message-${key}`);
                 messageBox.text(message);
-
                 $(`#message-box-${key}`).attr('hidden', false);
             }
-
             function hide(key) {
                 $(`#message-box-${key}`).attr('hidden', true);
             } */
-
             function edit(key) {
                 const form = document.getElementById(`form-${key}`);
                 form.submit();
             }
-
             function sendOrder(coluna) {
                 if (coluna == orderColumn) {
                     if (order == 'ASC') {
@@ -150,10 +146,8 @@
                         order = 'ASC'
                     }
                 }
-
                 document.getElementById('order-column').value = coluna;
                 document.getElementById('order').value = order;
-
                 // Enviar formulário
                 document.getElementById('order-form').submit();
             }

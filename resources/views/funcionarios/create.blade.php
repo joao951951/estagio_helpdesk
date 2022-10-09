@@ -20,9 +20,9 @@
                     <form class="grid grid-cols-6 gap-4" action="{{ route('funcionarios.store') }}" method="POST" autocomplete="off">
                         @csrf
 
-                        <div class="col-span-6">
+                        <div class="col-span-6 lg:col-span-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="name">
-                                Nome
+                                Nome Completo
                             </label>
 
                             <input
@@ -37,7 +37,7 @@
                             >
                         </div>
 
-                        <div class="col-span-6">
+                        <div class="col-span-6 lg:col-span-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="cpf">
                                 CPF
                             </label>
@@ -53,7 +53,7 @@
                         </div>
 
                         {{-- Usuário de acesso --}}
-                        <div class="col-span-6">
+                        <div class="col-span-6 lg:col-span-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="userName">
                                 Nome do Usuário
                             <input
@@ -66,7 +66,7 @@
                             >
                         </div>
 
-                        <div class="col-span-6">
+                        <div class="col-span-6 lg:col-span-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="userEmail">
                                 E-mail
                             <input
@@ -75,6 +75,19 @@
                                 type="email"
                                 placeholder="Digite o e-mail..."
                                 name="userEmail"
+                                required
+                            >
+                        </div>
+
+                        <div class="col-span-6">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="phone">
+                                Contato
+                            <input
+                                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                id="phone"
+                                type="text"
+                                placeholder="Digite um numero de contato..."
+                                name="phone"
                                 required
                             >
                         </div>

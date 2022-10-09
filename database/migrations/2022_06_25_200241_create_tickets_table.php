@@ -23,13 +23,13 @@ class CreateTicketsTable extends Migration
             $table->text('service_performed')->nullable();
             $table->text('swap_parts')->nullable();
             $table->unsignedBigInteger('priority_id');
-            $table->unsignedBigInteger('status_id');
+            $table->unsignedBigInteger('status');
             $table->timestamps();
 
             $table->foreign('client_id')->references('id')->on('clients');
             $table->foreign('employee_id')->references('id')->on('employees');
             $table->foreign('priority_id')->references('id')->on('priorities');
-            $table->foreign('status_id')->references('id')->on('status');
+            $table->foreign('status')->references('id')->on('status');
         });
     }
 

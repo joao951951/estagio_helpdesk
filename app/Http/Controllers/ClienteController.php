@@ -44,13 +44,36 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
+        $rules = [
+            'name'=>'required|min:5|max:50',
+            'email'=>'email',
+            'cnpj'=>'required|min:4|max:20',
+            'phone'=>'max:30',
+        ];
+
+        $feedback = [
+            'required'=>'O campo :attribute deve ser preenchido', 
+            'name.min'=>'O campo nome deve ter no mínimo 5 caracteres',
+            'name.max'=>'O campo nome deve ter no máximo 50 caracteres',
+            'email'=>'Insira um email válido',
+            'password.min'=>'O campo senha deve ter no mínimo 4 caracteres',
+            'password.max'=>'O campo senha deve ter no máximo 20 caracteres',
+        ];
+
+        $request->validate($rules, $feedback);
+
+
         $data = $request->except('_token');
+
+        // dd($data);
 
         $client = $this->client->create($data);
 
-        return redirect()->route('clientes.index')->with([
-            'success' => "{$client->name} foi criado com sucesso"
-        ]);
+        return redirect()->route('clientes.index')->with($feedback);
+
+        // return redirect()->route('clientes.index')->with([
+        //     'success' => "{$client->name} foi criado com sucesso"
+        // ]);
     }
 
     /**

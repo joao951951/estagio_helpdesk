@@ -48,6 +48,8 @@ class FuncionarioController extends Controller
     {
         $data = $request->except('_token');
 
+        // dd($data);
+
         $user = User::create([
             'name' => $data['userName'],
             'email' => $data['userEmail'],
@@ -60,6 +62,7 @@ class FuncionarioController extends Controller
             'user_id' => $user->id,
             'name' => $data['name'],
             'cpf' => $data['cpf'],
+            'phone' => $data['phone'],
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
