@@ -186,10 +186,15 @@
                                     name="status"
                                     required
                                 >
-                                    <option value="" selected disabled>Selecione uma Opção</option>
-                                    <option value="aberto" @if ($ticket->status == 'aberto') selected @endif>Aberto</option>
-                                    <option value="em-andamento" @if ($ticket->status == 'em-andamento') selected @endif>Em Andamento</option>
-                                    <option value="fechado" @if ($ticket->status == 'fechado') selected @endif>Fechado</option>
+                                    <!-- <option value="" selected disabled>Selecione uma Opção</option>
+                                    <option value=1 @if ($ticket->status == '1') selected @endif>Aberto</option>
+                                    <option value=2 @if ($ticket->status == '2') selected @endif>Em Andamento</option>
+                                    <option value=3 @if ($ticket->status == '3') selected @endif>Visita Tecnica</option>
+                                    <option value=4 @if ($ticket->status == '4') selected @endif>Fechado</option> -->
+                                    
+                                    @foreach ($status as $state)
+                                        <option value="{{ $state->id }}" @if ($ticket->status == $state->id) selected @endif>{{ $state->desc_status }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>

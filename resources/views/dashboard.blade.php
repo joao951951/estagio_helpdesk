@@ -18,6 +18,9 @@
                         <div class="w-1/2 border-r border-black-200 p-2">Em Andamento</div>
                         <div class="w-1/2 p-2" id="in_progress-ticket">{{ $numberInProgressTicket }}</div>
 
+                        <div class="w-1/2 border-r border-black-200 p-2">Aguardando Visita Técnica</div>
+                        <div class="w-1/2 p-2" id="in_progress-ticket">{{ $numberWaitingEmp }}</div>
+
                         <div class="w-1/2 border-r border-black-200 p-2">Fechado</div>
                         <div class="w-1/2 p-2" id="closed-ticket">{{ $numberClosedTicked }}</div>
                     </div>

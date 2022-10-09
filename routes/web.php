@@ -32,11 +32,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('chamados')->name('chamados.')->group(function () {
         Route::get('', [ChamadosController::class, 'index'])->name('index');
+        Route::get('/history', [ChamadosController::class, 'history'])->name('history');
         Route::get('adicionar', [ChamadosController::class, 'create'])->name('create');
         Route::post('', [ChamadosController::class, 'store'])->name('store');
         Route::get('{ticket}/editar', [ChamadosController::class, 'edit'])->name('edit');
         Route::put('{ticket}', [ChamadosController::class, 'update'])->name('update');
-
         Route::delete('{ticket}', [ChamadosController::class, 'destroy'])->name('destroy');
     });
 

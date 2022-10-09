@@ -8,6 +8,7 @@ use App\Models\Employee;
 use App\Models\Priority;
 use App\Models\Order;
 use App\Models\Ticket;
+use App\Models\Status;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -54,13 +55,50 @@ class ChamadosController extends Controller
             $order = 'ASC';
         }
 
+        $tickets_open = $this->ticket
+            ->where('status', '<=', '3')
+            ->orderBy(filter_var($orderColumn, FILTER_SANITIZE_STRIPPED), filter_var($order, FILTER_SANITIZE_STRIPPED))
+        ->paginate(10);
+
+        return view('chamados.index', compact(['finalDate', 'initialDate', 'order', 'orderColumn','tickets_open']));
+    }
+
+    public function history()
+    {
+        $todayDate = Carbon::now()->format('Y-m-d');
+
+        $date = '';
+        if (request()->has('initialDate')) {
+            $initialDate = request()->initialDate;
+        } else {
+            $initialDate = $todayDate;
+        }
+
+        if (request()->has('finalDate')) {
+            $finalDate = request()->finalDate;
+        } else {
+            $finalDate = $todayDate;
+        }
+
+        if (request()->has('orderColumn')) {
+            $orderColumn = request()->orderColumn;
+        } else {
+            $orderColumn = 'status';
+        }
+
+        if (request()->has('order')) {
+            $order = request()->order;
+        } else {
+            $order = 'ASC';
+        }
+
         $finalDateCompare = (new Carbon($finalDate))->addDay(1)->format('Y-m-d');
         $tickets = $this->ticket
             ->whereBetween('created_at', [$initialDate, $finalDateCompare])
             ->orderBy(filter_var($orderColumn, FILTER_SANITIZE_STRIPPED), filter_var($order, FILTER_SANITIZE_STRIPPED))
         ->paginate(10);
 
-        return view('chamados.index', compact(['finalDate', 'initialDate', 'order', 'orderColumn', 'tickets']));
+        return view('chamados.history', compact(['finalDate', 'initialDate', 'order', 'orderColumn', 'tickets']));
     }
 
     /**
@@ -87,11 +125,12 @@ class ChamadosController extends Controller
     {
         $data = $request->except('_token');
 
-        if ($request->has('employee_id')) {
-            $data['status'] = 'em-andamento';
-        } else {
-            $data['status'] = 'aberto';
-        }
+        // if ($request->has('employee_id')) {
+        //     $data['status'] = 'em-andamento';
+        // } else {
+        //     $data['status'] = 'aberto';
+        // }
+        $data['status'] = '1';
 
         $ticket = $this->ticket->create($data);
 
@@ -121,8 +160,9 @@ class ChamadosController extends Controller
     {
         $employees = Employee::all();
         $priorities = Priority::all();
+        $status = Status::all();
 
-        return view('chamados.edit', compact(['ticket', 'employees', 'priorities']));
+        return view('chamados.edit', compact(['ticket', 'employees', 'priorities', 'status']));
     }
 
     /**
@@ -138,14 +178,14 @@ class ChamadosController extends Controller
 
         $ticket->update($data);
 
-        if ($ticket->status == 'fechado') {
-            Order::create([
-                'client_id' => $ticket->client_id,
-                'ticket_id' => $ticket->id
-            ]);
+        // if ($ticket->status == 'fechado') {
+        //     Order::create([
+        //         'client_id' => $ticket->client_id,
+        //         'ticket_id' => $ticket->id
+        //     ]);
 
-            MailTicketToClient::dispatch($ticket);
-        }
+            // MailTicketToClient::dispatch($ticket);
+        // }
 
         return redirect()->route('chamados.index')->with([
             'success' => "As informações {$ticket->id} foram atualizadas com sucesso"
