@@ -97,27 +97,31 @@
                                             </tbody>
                                             {{ $tickets_open->appends(request()->input())->links() }}
                                         </table>
-                                </div>
-                                @endif
-                            <div class="grid grid-cols-2 gap-3 px-6 py-4 text-center">
-                                <div class="">
-                                    <form action="{{ route('chamados.create') }}">
-                                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                            Adicionar Chamado
-                                        </button>
-                                    </form>
-                                </div>
-                                <div class="">
-                                    <form action="{{ route('chamados.history') }}">
-                                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                            Consultar Todos Chamados
-                                        </button>
-                                    </form>
+                                    </div>
+                                    @else
+                                        <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative mt-2" role="alert">
+                                            <span class="block sm:inline">Nenhum chamado</span>
+                                        </div>
+                                    @endif
+                                    <div class="grid grid-cols-2 gap-3 px-6 py-4 text-center">
+                                        <div class="">
+                                            <form action="{{ route('chamados.create') }}">
+                                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                                    Adicionar Chamado
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <div class="">
+                                            <form action="{{ route('chamados.history') }}">
+                                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                                    Consultar Todos Chamados
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-            </div>
-        </div>
-    </div>
+                        </div>
 
     <x-slot name="scripts">
         <script>

@@ -11,6 +11,7 @@ use App\Models\Ticket;
 use App\Models\Status;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ChamadosController extends Controller
 {
@@ -26,10 +27,9 @@ class ChamadosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $todayDate = Carbon::now()->format('Y-m-d');
+    public function index(){
 
+        $todayDate = Carbon::now()->format('Y-m-d');
         $date = '';
         if (request()->has('initialDate')) {
             $initialDate = request()->initialDate;
@@ -55,10 +55,22 @@ class ChamadosController extends Controller
             $order = 'ASC';
         }
 
-        $tickets_open = $this->ticket
-            ->where('status', '<=', '3')
+        if(Auth::user()->admin == 0){
+            $employee = Employee::where('user_id', '=', Auth::user()->id)->get();
+            $employee = $employee->get(0);
+
+            $tickets_open = $this->ticket
+            ->where('status', '=', 1)
+            ->orWhere('employee_id', '=', $employee->id)
             ->orderBy(filter_var($orderColumn, FILTER_SANITIZE_STRIPPED), filter_var($order, FILTER_SANITIZE_STRIPPED))
-        ->paginate(10);
+            ->paginate(10);
+    
+        }else{
+            $tickets_open = $this->ticket
+                ->where('status', '<=', 3)
+                ->orderBy(filter_var($orderColumn, FILTER_SANITIZE_STRIPPED), filter_var($order, FILTER_SANITIZE_STRIPPED))
+                ->paginate(10);
+        }
 
         return view('chamados.index', compact(['finalDate', 'initialDate', 'order', 'orderColumn','tickets_open']));
     }
@@ -125,11 +137,6 @@ class ChamadosController extends Controller
     {
         $data = $request->except('_token');
 
-        // if ($request->has('employee_id')) {
-        //     $data['status'] = 'em-andamento';
-        // } else {
-        //     $data['status'] = 'aberto';
-        // }
         $data['status'] = '1';
 
         $ticket = $this->ticket->create($data);
