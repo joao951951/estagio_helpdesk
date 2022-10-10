@@ -93,8 +93,8 @@
                                                     <input type="hidden" id="order" name="order">
                                                 </form>
 
-                                                <th class="font-semibold text-sm uppercase px-6 py-4">Cliente</th>
                                                 <th class="font-semibold text-sm uppercase px-6 py-4">Título</th>
+                                                <th class="font-semibold text-sm uppercase px-6 py-4">Cliente</th>
                                                 <!-- <th class="font-semibold text-sm uppercase px-6 py-4 text-center hover:bg-gray-800 hover:cursor-pointer"  onclick="sendOrder('priority');">
                                                     Prioridade @if ($orderColumn == 'priority') @if ($order == 'ASC') &#129045; @else &#129047; @endif @endif
                                                 </th> -->
@@ -114,16 +114,18 @@
                                             @foreach ($tickets as $key => $ticket)
                                                 <tr>
                                                     <td class="px-6 py-4">
+                                                        <a class="text-purple-800 hover:underline hover:cursor-pointer" href="{{ route('chamados.historyticket', [$ticket->id]) }}">    
+                                                            <p class="">{{ $ticket->title }}</p>
+                                                        </a> 
+                                                    </td>
+
+                                                    <td class="px-6 py-4">
                                                         <div class="flex items-center space-x-3">
                                                             <div>
                                                                 <p>{{ clientName($ticket->client_id) }}</p>
                                                                 <p class="text-gray-500 text-sm font-semibold tracking-wide">{{ clientEmail($ticket->client_id) }}</p>
                                                             </div>
                                                         </div>
-                                                    </td>
-
-                                                    <td class="px-6 py-4">
-                                                        <p class="">{{ $ticket->title }}</p>
                                                     </td>
 
                                                     @if($ticket->priority_id == 1)

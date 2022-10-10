@@ -57,14 +57,20 @@ class ChamadosController extends Controller
         }
 
         if(Auth::user()->admin == 0){
-            $employee = Employee::where('user_id', '=', Auth::user()->id)->get();
-            $employee = $employee->get(0);
+
+            // dd($employee);
 
             $tickets_open = $this->ticket
-            ->where('status', '=', 1)
-            ->orWhere('employee_id', '=', $employee->id)
+            ->where('status', '<=', 3)->orWhere(function($query)
+            {
+                $employee = Employee::where('user_id', '=', Auth::user()->id)->get();
+                $employee = $employee->get(0);
+                $query->where('employee_id', '=', $employee->id)->where('status', '<>', 4);
+            })
             ->orderBy(filter_var($orderColumn, FILTER_SANITIZE_STRIPPED), filter_var($order, FILTER_SANITIZE_STRIPPED))
             ->paginate(10);
+
+
     
         }else{
             $tickets_open = $this->ticket
@@ -117,9 +123,14 @@ class ChamadosController extends Controller
     public function historyTicket(Ticket $ticket)
     {
         $changes = " ";
-
-        $employee = Employee::where('id', '=', $ticket->employee_id)->get();
-        $employee = $employee->get(0);
+        if(isset($ticket->employee_id)){
+            $employee = Employee::where('id', '=', $ticket->employee_id)->get();
+            $employee = $employee->get(0);
+        }else{
+            return redirect()->route('chamados.index')->with([
+                'error' => "{$ticket->title} Antes de obter o histórico é necessário atribuir o chamado a algum técnico ou algum técnico assumir"
+            ]);
+        }
 
         $client = Client::where('id', '=', $ticket->client_id)->get();
         $client = $client->get(0);
@@ -133,13 +144,6 @@ class ChamadosController extends Controller
 
                 $employee = Employee::where('id', '=', $ticket->employee_id)->get();
                 $employee = $employee->first();
-
-                if(isset($employee_old)){
-                    $changes = "Chamado repassado para $employee->name responsável anteriormente era $employee_old->name";
-                }else{
-                    $changes = "Chamado repassado para $employee->name antes não estava com ninguém";
-                }
-                // dd($changes);
             } 
         }
 

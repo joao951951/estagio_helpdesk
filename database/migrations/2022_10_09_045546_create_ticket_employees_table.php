@@ -16,7 +16,7 @@ class CreateTicketEmployeesTable extends Migration
         Schema::create('ticket_employees', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('ticket_id');
-            $table->unsignedBigInteger('employee_id');
+            $table->unsignedBigInteger('employee_id')->nullable();
             $table->string('descri')->nullable();
 
             //Valores Antigos
