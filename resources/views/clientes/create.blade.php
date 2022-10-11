@@ -61,6 +61,7 @@
 
                             <input
                                 class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                maxlength="18"
                                 id="cnpj"
                                 type="text"
                                 placeholder="Digite o CNPJ..."
@@ -158,28 +159,6 @@
                                 required
                             >
                         </div>
-
-                        <!-- <div class="col-span-6 lg:col-span-3">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="contrato">
-                                Contrato
-                            </label>
-
-                            <div class="relative">
-                                <select
-                                    class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="contrato"
-                                    name="contract"
-                                    required
-                                >
-                                    <option value="" selected disabled>Selecione uma Opção</option>
-                                    <option value="contrato1">Contrato 1 - Cliente com contrato mensal</option>
-                                    <option value="contrato2">Contrato 2 - Cliente sem contrato, mas sempre atendemos</option>
-                                    <option value="contrato3">Contrato 3 - Cliente novo</option>
-                                    <option value="contrato4">Contrato 4 - Cliente avulso, algumas vezes atendemos</option>
-                                </select>
-                            </div>
-                        </div> -->
-
                         <div class="col-span-6">
                             <div class="grid grid-cols-5">
                                 <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-3 col-span-5 lg:col-span-1">
@@ -192,4 +171,13 @@
             </div>
         </div>
     </div>
+    <x-slot name="scripts">
+        <script type="text/javascript">
+            $(document).ready(function(){	
+                $("#cnpj").mask("99.999.999/9999-99");
+                $("#phone").mask("(99)999999999");
+                $("#whatsapp").mask("(99)999999999");
+            });
+        </script>
+    </x-slot>
 </x-app-layout>

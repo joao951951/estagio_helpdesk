@@ -54,6 +54,7 @@
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.mask.min.js') }}"></script>
 
         {{ $scripts ?? '' }}
     </body>

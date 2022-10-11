@@ -23,6 +23,7 @@
         "tailwindcss": "^2.0.2"
     },
     "dependencies": {
-        "jquery": "^3.6.0"
+        "jquery": "^3.6.1",
+        "jquery-mask-plugin": "^1.14.16"
     }
 }

@@ -117,4 +117,12 @@
             </div>
         </div>
     </div>
+    <x-slot name="scripts">
+        <script type="text/javascript">
+            $(document).ready(function(){	
+                $("#cpf").mask("999.999.999-99");
+                $("#phone").mask("(99)999999999");
+            });
+        </script>
+    </x-slot>
 </x-app-layout>
