@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class ClienteController extends Controller
 {
@@ -44,36 +46,18 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        $rules = [
-            'name'=>'required|min:5|max:50',
-            'email'=>'email',
-            'cnpj'=>'required|min:4|max:20',
-            'phone'=>'max:30',
-        ];
+        if(Auth::user()->admin != 1){
+            return redirect()->route('clientes.index')->with([
+                'error' => "Você não tem permissão para cadastrar novos clientes"
+            ]);
+        }else{
+            $data = $request->except('_token');
+            $client = $this->client->create($data);
 
-        $feedback = [
-            'required'=>'O campo :attribute deve ser preenchido', 
-            'name.min'=>'O campo nome deve ter no mínimo 5 caracteres',
-            'name.max'=>'O campo nome deve ter no máximo 50 caracteres',
-            'email'=>'Insira um email válido',
-            'password.min'=>'O campo senha deve ter no mínimo 4 caracteres',
-            'password.max'=>'O campo senha deve ter no máximo 20 caracteres',
-        ];
-
-        $request->validate($rules, $feedback);
-
-
-        $data = $request->except('_token');
-
-        // dd($data);
-
-        $client = $this->client->create($data);
-
-        return redirect()->route('clientes.index')->with($feedback);
-
-        // return redirect()->route('clientes.index')->with([
-        //     'success' => "{$client->name} foi criado com sucesso"
-        // ]);
+            return redirect()->route('clientes.index')->with([
+                'success' => "{$client->name} foi criado com sucesso"
+            ]);
+        }
     }
 
     /**
@@ -107,12 +91,18 @@ class ClienteController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-        $data = $request->except(['_token', '_method']);
-        $client->update($data);
+        if(Auth::user()->admin != 1){
+            return redirect()->route('clientes.index')->with([
+                'error' => "Você não tem permissão para cadastrar novos clientes"
+            ]);
+        }else{
+            $data = $request->except(['_token', '_method']);
+            $client->update($data);
 
-        return redirect()->route('clientes.index')->with([
-            'success' => "As informações {$client->name} foram atualizadas com sucesso"
-        ]);
+            return redirect()->route('clientes.index')->with([
+                'success' => "As informações {$client->name} foram atualizadas com sucesso"
+            ]);
+        }
     }
 
     /**

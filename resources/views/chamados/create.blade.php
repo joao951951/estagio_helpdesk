@@ -114,6 +114,8 @@
                                 >
                                     <option value="" selected disabled>Selecione uma Opção</option>
 
+                                    <option value="">Não atribuir técnico</option>
+
                                     @foreach ($employees as $employee)
                                         <option value="{{ $employee->id }}">{{ $employee->name }}</option>
                                     @endforeach
@@ -142,28 +144,6 @@
         <script>
             function getClientInformation() {
                 const idCliente = $('#client').val();
-
-                $.ajax({
-                    url: "/api/clientes",
-                    type: "get",
-                    data: {
-                        idCliente: idCliente
-                    },
-                    success: function(res) {
-                        const client = res.client;
-                        const priority = $('#priority');
-
-                        if (client.contract == 'contrato1') {
-                            priority.val('muito-alto');
-                        } else if (client.contract == 'contrato2') {
-                            priority.val('alto');
-                        } else if (client.contract == 'contrato3') {
-                            priority.val('medio');
-                        } else if (client.contract == 'contrato4') {
-                            priority.val('baixo');
-                        }
-                    }
-                });
             }
         </script>
     </x-slot>

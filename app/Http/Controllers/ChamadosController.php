@@ -29,7 +29,6 @@ class ChamadosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-
         $todayDate = Carbon::now()->format('Y-m-d');
         $date = '';
         if (request()->has('initialDate')) {
@@ -122,6 +121,14 @@ class ChamadosController extends Controller
 
     public function historyTicket(Ticket $ticket)
     {
+        $query = Employee::where('user_id', '=', Auth::user()->id)->get();
+        $query = $query->get(0);
+
+        if($query != null){
+            $type_user = 0;
+        }else{
+            $type_user = 1;
+        }
         $changes = " ";
         if(isset($ticket->employee_id)){
             $employee = Employee::where('id', '=', $ticket->employee_id)->get();
@@ -148,9 +155,9 @@ class ChamadosController extends Controller
         }
 
 
-        // dd($history_ticket);
+        // dd($query);
 
-        return view('chamados.history_ticket', compact('ticket', 'employee', 'client', 'history_ticket', 'changes'));
+        return view('chamados.history_ticket', compact('ticket', 'employee', 'client', 'history_ticket', 'changes','type_user', 'query'));
     }
 
     /**
@@ -338,14 +345,22 @@ class ChamadosController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
-        $history_ticket = Ticket_employee::where('ticket_id', '=' , $ticket->id);
+        if(Auth::user()->admin != 1){
+            return redirect()->route('chamados.index')->with([
+                'error' => "Você não tem permissão para cancelar chamados"
+            ]);
+        }else{
+            $history_ticket = Ticket_employee::where('ticket_id', '=' , $ticket->id);
+            dd($history_ticket);
+            $ticket->delete();
+    
+            return redirect()->route('funcionarios.index')->with([
+                'success' => "Chamado cancelado com sucesso"
+            ]);
+        }
+    }
 
-        dd($history_ticket);
-
-        $ticket->delete();
-
-        return redirect()->route('funcionarios.index')->with([
-            'success' => "{$employee->name} foi excluído com sucesso"
-        ]);
+    public function assumirChamado($query){
+        dd($query);
     }
 }

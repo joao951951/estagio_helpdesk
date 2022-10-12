@@ -6,6 +6,8 @@ use App\Models\Employee;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class FuncionarioController extends Controller
 {
@@ -46,30 +48,34 @@ class FuncionarioController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->except('_token');
+        if(Auth::user()->admin != 1){
+            return redirect()->route('chamados.index')->with([
+                'error' => "Você não tem permissão para criar novos técnicos"
+            ]);
+        }else{
+            $data = $request->except('_token');
+            $user = User::create([
+                'name' => $data['userName'],
+                'email' => $data['userEmail'],
+                'admin' => $data['admin'],
+                'password' => bcrypt($data['userPassword']),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
 
-        // dd($data);
+            $employee = $this->employee->create([
+                'user_id' => $user->id,
+                'name' => $data['name'],
+                'cpf' => $data['cpf'],
+                'phone' => $data['phone'],
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
 
-        $user = User::create([
-            'name' => $data['userName'],
-            'email' => $data['userEmail'],
-            'password' => bcrypt($data['userPassword']),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
-
-        $employee = $this->employee->create([
-            'user_id' => $user->id,
-            'name' => $data['name'],
-            'cpf' => $data['cpf'],
-            'phone' => $data['phone'],
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
-
-        return redirect()->route('funcionarios.index')->with([
-            'success' => "{$employee->name} foi criado com sucesso"
-        ]);
+            return redirect()->route('funcionarios.index')->with([
+                'success' => "{$employee->name} foi criado com sucesso"
+            ]);
+        }
     }
 
     /**
@@ -102,20 +108,23 @@ class FuncionarioController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Employee $employee)
-    {    
-        // dd($employee);
-        $data = $request->except(['_token', '_method']);
-        $user = User::find($employee['user_id']);
-        // dd($data);
+    {   
+        if(Auth::user()->admin != 1){
+            return redirect()->route('chamados.index')->with([
+                'error' => "Você não tem permissão para atualizar o registro de técnicos"
+            ]);
+        }else{ 
+            $data = $request->except(['_token', '_method']);
+            $user = User::find($employee['user_id']);
+            $employee->update($data);
+            $user->update([
+                'password' => bcrypt($data['password'])
+            ]);
 
-        $employee->update($data);
-        $user->update([
-            'password' => bcrypt($data['password'])
-        ]);
-
-        return redirect()->route('funcionarios.index')->with([
-            'success' => "As informações {$employee->name} foram atualizadas com sucesso"
-        ]);
+            return redirect()->route('funcionarios.index')->with([
+                'success' => "As informações {$employee->name} foram atualizadas com sucesso"
+            ]);
+        }
     }
 
     /**

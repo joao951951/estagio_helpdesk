@@ -79,8 +79,8 @@
                             >
                         </div>
 
-                        <div class="col-span-6">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="phone">
+                        <div class="col-span-6 lg:col-span-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 py-2" for="phone">
                                 Contato
                             <input
                                 class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -90,6 +90,24 @@
                                 name="phone"
                                 required
                             >
+                        </div>
+
+                        <div class="col-span-6 lg:col-span-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="admin">
+                                Defina a permissão do técnico
+                            </label>
+                            
+                                <div class="relative mb-3">
+                                    <select
+                                        class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                        id="admin"
+                                        name="admin"
+                                    >
+                                        <option value="" selected disabled>Selecione uma Opção</option>
+                                        <option value="0">Usuário Comum</option>
+                                        <option value="1">Acesso Total</option>
+                                    </select>
+                                </div>
                         </div>
 
                         <div class="col-span-6">
