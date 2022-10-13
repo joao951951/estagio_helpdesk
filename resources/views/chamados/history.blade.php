@@ -5,14 +5,12 @@
         </h2>
     </x-slot>
 
-    <div class="py-3 flex h-screen justify-center items-center">
-
-
+    <div class="py-3 h-screen justify-center items-center">
         <div class="grid grid-cols-12 gap-8">
             <div class="col-span-12 lg:col-span-3 py-2 lg:py-0">
                 <div class="max-w-1xl sm:px-6 lg:px-3">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-3">
-                        <div class="grid grid-cols-2">
+                        <div style ="padding-left:20%" class="grid grid-cols-2">
                             <form action="" name="initialDateForm" class="col-span-2">
                                 <div class="col-span-2">
                                     <label for="initial-date">Data Início</label>

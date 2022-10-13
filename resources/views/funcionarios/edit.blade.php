@@ -96,6 +96,7 @@
                                 type="text"
                                 placeholder="Digite um numero de contato..."
                                 name="phone"
+                                value="{{ $employee->phone }}"
                                 required
                             >
                         </div>
@@ -119,13 +120,6 @@
                                 <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-3 col-span-5 lg:col-start-1 lg:col-end-2">
                                     Salvar
                                 </button>
-
-                                <!-- <button
-                                    type="button"
-                                    class="bg-blue-200 hover:bg-blue-700 hover:text-white text-black font-bold py-2 px-4 rounded mb-3 col-span-5 lg:col-start-2 lg:col-end-3 lg:ml-3"
-                                >
-                                    Mudar Senha
-                                </button> -->
 
                                 <button
                                     type="button"

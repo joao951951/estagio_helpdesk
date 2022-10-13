@@ -254,8 +254,9 @@ class ChamadosController extends Controller
 
         $data = $request->except(['_token', '_method']);
 
+        $data ['employee_id'] = "0";
+
         $ticket->update($data);
-        // dd($ticket_old);
 
         if($ticket_old->status != $ticket->status){
             $status_var = [
@@ -285,6 +286,7 @@ class ChamadosController extends Controller
                     'status_new' => $data['status'],
                     'descri' => "Chamado Fechado pelo usuário $user_name com email de $user_email ",
                     ]);
+
             }elseif($data['status'] == 1 && $ticket_old->status == 4){
                 Ticket_employee::create([
                     'ticket_id' => $ticket->id,
@@ -360,7 +362,10 @@ class ChamadosController extends Controller
         }
     }
 
-    public function assumirChamado($query){
-        dd($query);
+    public function assumirChamado(Ticket $ticket){
+        dd($ticket);
+        return redirect()->route('chamados.index')->with([
+            'success' => "Chamado cancelado com sucesso"
+        ]);
     }
 }

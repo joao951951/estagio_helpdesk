@@ -16,14 +16,7 @@
                                 </svg>                            
                             </button>
                     </form>
-                    <div class="flex grid-cols-2 gap-2 justify-end">
-                            @if($type_user == 0)
-                                <div>
-                                    <form class="form-get" action="{{ route('chamados.assumir', [$query] ) }}" method="PUT">
-                                        <button type="button" class="inline-block px-6 py-2.5 bg-blue-400 rounded shadow-md hover:bg-blue-500 hover:shadow-lg focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out modal-open">Assumir Chamado</button>
-                                    </form>
-                                </div>
-                            @endif
+                    <div class="flex grid-cols-1 gap-1 justify-end">
                             <div>
                                 <form >
                                     <a href="{{ route('chamados.edit', [$ticket]) }}">
@@ -45,8 +38,13 @@
                                 <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 py-6">
                                     <dt class="text-md font-medium text-gray-900">Tecnico Responsável pelo atendimento</dt>
                                     <dd class="mt-1 text-md text-gray-900 sm:col-span-2 sm:mt-0 ">{{ $employee->name }}, contato: {{ $employee->phone }}</dd>
-                                    <dd class="mt-1 text-md text-gray-900 sm:col-span-2 sm:mt-0 ">Status do chamado, {{ \App\Models\Status::find($ticket->status)->desc_status }}</dd>
                                 </div>
+
+                                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 py-6">
+                                    <dt class="text-md font-medium text-gray-900">Status do chamado</dt>
+                                    <dd class="mt-1 text-md text-gray-900 sm:col-span-2 sm:mt-0 ">{{ \App\Models\Status::find($ticket->status)->desc_status }}</dd>
+                                </div>
+
                                 <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 py-6">
                                     <dt class="text-md font-medium text-gray-900">Defeitos Reclamados</dt>
                                     <dd class="mt-1 text-md text-gray-900 sm:col-span-2 sm:mt-0">{{ $ticket->claimed_defect }}</dd>
@@ -65,7 +63,6 @@
                                 </div>
                                 <div class="bg-white px-4 py-5 grid grid-cols-2 gap-2 sm:px-6">
                                     <dt class="text-md font-medium text-gray-900">Histórico</dt>
-                                    <dd class="mt-1 text-md text-gray-900 sm:col-span-2 sm:mt-0">
                                         <div style="padding-left:60%" class="ml-4 flex-shrink-0">
                                             <!-- <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Ver Mais</a> -->
                                             <button id="btnVerMais" type="button" class="font-medium text-indigo-600 btn btn-outline btn-default" data-toggle="tooltip" data-original-title="Ver mais" data-container="body">
@@ -73,23 +70,20 @@
                                                 <span class="hidden-xs">Ver detalhes</span>
                                             </button>
                                         </div>
-                                    </dd>
                                     </div>
                                     @if (count($history_ticket) > 0)
                                         <dd class="mt-1 text-md text-gray-900 sm:col-span-2 sm:mt-0">
                                         <ul role="list" class="divide-y divide-gray-200 rounded-md border border-gray-200">
                                         @foreach ($history_ticket as $key => $ticket)
                                             <li class="flex items-center justify-between py-6 pl-3 pr-4 text-md">
-                                            <div class="flex w-0 flex-1 items-center">
-                                                <svg class="h-5 w-5 flex-shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                    <img style="width: 1.5em; height:1.5em " src="{{ asset('images/img-history.png') }}" alt="img-history">
-                                                </svg>
-                                                <span class="ml-2 w-0 flex-1 truncate">{{ $ticket->descri }}</span>
-                                            </div>
+                                                <div class="flex w-0 flex-1 items-center">
+                                                    <svg class="h-5 w-5 flex-shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                        <img style="width: 1.5em; height:1.5em " src="{{ asset('images/img-history.png') }}" alt="img-history">
+                                                    </svg>
+                                                    <span class="ml-2 w-0 flex-1 truncate">{{ $ticket->descri }}</span>
+                                                </div>
                                             </li>
-                                            <div class="flex w-0 flex-1 items-center">
-                                                <div class=" grid grid-cols-1 divOculta h-56  gap-4 content-center">
-                                                    <div class="overflow-x-auto relative">
+                                                    <div class="divOculta">
                                                             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                                                 <thead class="text-xs text-gray-900 uppercase dark:text-gray-400">
                                                                     <tr>
@@ -149,9 +143,7 @@
                                                                 </tbody>
                                                             </table>
                                                             <br>
-                                                    </div>
                                                 </div>
-                                            </div>
                                         @endforeach
                                         </ul>
                                         <br>
