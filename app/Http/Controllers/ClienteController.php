@@ -46,17 +46,23 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->except('_token');
         if(Auth::user()->admin != 1){
             return redirect()->route('clientes.index')->with([
                 'error' => "Você não tem permissão para cadastrar novos clientes"
             ]);
         }else{
-            $data = $request->except('_token');
-            $client = $this->client->create($data);
+            if(Client::where('cnpj', $data['cnpj'])->get()->get(0) == null ){
+                $client = $this->client->create($data);
 
-            return redirect()->route('clientes.index')->with([
-                'success' => "{$client->name} foi criado com sucesso"
-            ]);
+                return redirect()->route('clientes.index')->with([
+                    'success' => "{$client->name} foi criado com sucesso"
+                ]);
+            }else{
+                return redirect()->route('clientes.index')->with([
+                    'error' => "CNPJ já existe no banco de dados"
+                ]);
+            }
         }
     }
 

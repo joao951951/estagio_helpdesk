@@ -32,7 +32,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('chamados')->name('chamados.')->group(function () {
         Route::get('', [ChamadosController::class, 'index'])->name('index');
-        Route::post('{ticket}', [ChamadosController::class, 'assumirChamado'])->name('assumir');
         Route::get('/history', [ChamadosController::class, 'history'])->name('history');
         Route::get('{ticket}/historyticket', [ChamadosController::class, 'historyTicket'])->name('historyticket');
         Route::get('adicionar', [ChamadosController::class, 'create'])->name('create');

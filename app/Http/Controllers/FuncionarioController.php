@@ -48,33 +48,40 @@ class FuncionarioController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->except('_token');
+        // dd($data);
         if(Auth::user()->admin != 1){
             return redirect()->route('chamados.index')->with([
                 'error' => "Você não tem permissão para criar novos técnicos"
             ]);
         }else{
-            $data = $request->except('_token');
-            $user = User::create([
-                'name' => $data['userName'],
-                'email' => $data['userEmail'],
-                'admin' => $data['admin'],
-                'password' => bcrypt($data['userPassword']),
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ]);
+            if(Employee::where('cpf', $data['cpf'])->get()->get(0) == null && User::where('name', $data['userName'])->get()->get(0) == null && User::where('email', $data['userEmail'])->get()->get(0) == null){
+                $user = User::create([
+                    'name' => $data['userName'],
+                    'email' => $data['userEmail'],
+                    'admin' => $data['admin'],
+                    'password' => bcrypt($data['userPassword']),
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
 
-            $employee = $this->employee->create([
-                'user_id' => $user->id,
-                'name' => $data['name'],
-                'cpf' => $data['cpf'],
-                'phone' => $data['phone'],
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ]);
+                $employee = $this->employee->create([
+                    'user_id' => $user->id,
+                    'name' => $data['name'],
+                    'cpf' => $data['cpf'],
+                    'phone' => $data['phone'],
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
 
-            return redirect()->route('funcionarios.index')->with([
-                'success' => "{$employee->name} foi criado com sucesso"
-            ]);
+                return redirect()->route('funcionarios.index')->with([
+                    'success' => "{$employee->name} foi criado com sucesso"
+                ]);
+            }else{
+                return redirect()->route('funcionarios.index')->with([
+                    'error' => "Registro Duplicado"
+                ]);
+            }
         }
     }
 
