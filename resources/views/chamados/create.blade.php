@@ -117,7 +117,9 @@
                                     <option value="">Não atribuir técnico</option>
 
                                     @foreach ($employees as $employee)
-                                        <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                        @if($employee->active == 1)
+                                            <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>

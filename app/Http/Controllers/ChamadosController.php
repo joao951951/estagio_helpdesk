@@ -60,7 +60,9 @@ class ChamadosController extends Controller
             // dd($employee);
 
             $tickets_open = $this->ticket
-            ->where('status', '<=', 3)->orWhere(function($query)
+            ->where('status', '<=', 3)
+            ->where('status', '>' , 1)
+            ->orWhere(function($query)
             {
                 $employee = Employee::where('user_id', '=', Auth::user()->id)->get();
                 $employee = $employee->get(0);
@@ -253,8 +255,6 @@ class ChamadosController extends Controller
         $ticket_old = Ticket::find($ticket->id);
 
         $data = $request->except(['_token', '_method']);
-
-        $data ['employee_id'] = "0";
 
         $ticket->update($data);
 

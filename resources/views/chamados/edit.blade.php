@@ -168,7 +168,9 @@
                                     <option value="" selected disabled>Selecione uma Opção</option>
 
                                     @foreach ($employees as $employee)
-                                        <option value="{{ $employee->id }}" @if ($ticket->employee_id == $employee->id) selected @endif>{{ $employee->name }}</option>
+                                        @if($employee->active == 1)
+                                            <option value="{{ $employee->id }}" @if ($ticket->employee_id == $employee->id) selected @endif>{{ $employee->name }}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>

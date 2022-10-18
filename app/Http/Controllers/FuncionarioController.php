@@ -115,22 +115,37 @@ class FuncionarioController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Employee $employee)
-    {   
+    {
+        $data = $request->except(['_token', '_method']);
+        dd($data);
+        
         if(Auth::user()->admin != 1){
             return redirect()->route('chamados.index')->with([
                 'error' => "Você não tem permissão para atualizar o registro de técnicos"
             ]);
-        }else{ 
-            $data = $request->except(['_token', '_method']);
-            $user = User::find($employee['user_id']);
-            $employee->update($data);
-            $user->update([
-                'password' => bcrypt($data['password'])
-            ]);
+        }else{
+            if($data['active'] == 1){
+                $user = User::find($employee['user_id']);
+                $employee->update($data);
+                $user->update([
+                    'password' => bcrypt($data['password'])
+                ]);
 
-            return redirect()->route('funcionarios.index')->with([
-                'success' => "As informações {$employee->name} foram atualizadas com sucesso"
-            ]);
+                return redirect()->route('funcionarios.index')->with([
+                    'success' => "As informações {$employee->name} foram atualizadas com sucesso"
+                ]);
+            }else{
+                $user = User::find($employee['user_id']);
+                $employee->update($data);
+                $user->update([
+                    'password' => bcrypt($data['password'])
+                ]);
+
+                return redirect()->route('funcionarios.index')->with([
+                    'success' => "As informações {$employee->name} foram atualizadas com sucesso"
+                ]);
+                
+            }
         }
     }
 

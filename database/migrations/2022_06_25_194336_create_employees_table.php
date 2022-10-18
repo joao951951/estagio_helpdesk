@@ -20,6 +20,7 @@ class CreateEmployeesTable extends Migration
             $table->string('cpf')->unique();
             $table->string('phone');
             $table->boolean('active')->default(1);
+            $table->softDeletes();
             $table->timestamps();
             
             $table->foreign('user_id')->references('id')->on('users');
