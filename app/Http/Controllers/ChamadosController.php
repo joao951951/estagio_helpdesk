@@ -60,8 +60,7 @@ class ChamadosController extends Controller
             // dd($employee);
 
             $tickets_open = $this->ticket
-            ->where('status', '<=', 3)
-            ->where('status', '>' , 1)
+            ->where('employee_id', '=', null)
             ->orWhere(function($query)
             {
                 $employee = Employee::where('user_id', '=', Auth::user()->id)->get();
@@ -70,7 +69,6 @@ class ChamadosController extends Controller
             })
             ->orderBy(filter_var($orderColumn, FILTER_SANITIZE_STRIPPED), filter_var($order, FILTER_SANITIZE_STRIPPED))
             ->paginate(10);
-
 
     
         }else{
