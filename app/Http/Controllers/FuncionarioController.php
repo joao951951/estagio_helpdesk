@@ -117,8 +117,7 @@ class FuncionarioController extends Controller
     public function update(Request $request, Employee $employee)
     {
         $data = $request->except(['_token', '_method']);
-        dd($data);
-        
+                
         if(Auth::user()->admin != 1){
             return redirect()->route('chamados.index')->with([
                 'error' => "Você não tem permissão para atualizar o registro de técnicos"
