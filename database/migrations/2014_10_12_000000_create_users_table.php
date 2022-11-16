@@ -20,9 +20,12 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('admin')->default(0);
+            $table->unsignedBigInteger('typeuser_id')->default(1);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('typeuser_id')->references('id')->on('typeuser');
         });
     }
 
