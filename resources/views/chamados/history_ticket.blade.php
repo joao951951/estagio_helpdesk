@@ -134,7 +134,7 @@
                                                                             {{ $ticket->service_performed_new }}
                                                                         </td>
                                                                         <td class="py-4 px-6">
-                                                                            {{ $ticket->service_performed_new }}
+                                                                            {{ $ticket->swap_parts_new }}
                                                                         </td>
                                                                         <td class="py-4 px-6">
                                                                             {{ $ticket->created_at->format('d-m-Y H:i:s') }}
