@@ -3,7 +3,7 @@
 ## Requisitos
 - Composer v2.0.13
 - Node v14.16.1
-- PHP v7.4.19
+- PHP v8.0.2
 
 ## Instalação
 1. Clonar esse repositório: ```git clone https://github.com/connsecurity/aplicacao-helpdesk```
