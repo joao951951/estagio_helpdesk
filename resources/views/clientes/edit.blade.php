@@ -98,7 +98,6 @@
                                 type="email"
                                 placeholder="Digite o e-mail..."
                                 name="email"
-                                required
                                 value="{{ $client->email }}"
                             >
                         </div>
@@ -114,7 +113,6 @@
                                 type="text"
                                 name="phone"
                                 value="{{ $client->phone }}"
-                                required
                             >
                         </div>
 
@@ -130,7 +128,6 @@
                                 placeholder="Digite o WhatsApp..."
                                 name="whatsapp"
                                 value="{{ $client->whatsapp }}"
-                                required
                             >
                         </div>
 

@@ -7,6 +7,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "barryvdh/laravel-dompdf": "^0.9.0",
+        "doctrine/dbal": "^3.6",
         "dompdf/dompdf": "^1.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -14,9 +15,9 @@
         "laravel/framework": "^8.40",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "lucascudo/laravel-pt-br-localization": "^1.1",
         "phpmailer/phpmailer": "^6.5",
-        "pusher/pusher-php-server": "^7.0",
-        "lucascudo/laravel-pt-br-localization": "^1.1"
+        "pusher/pusher-php-server": "^7.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

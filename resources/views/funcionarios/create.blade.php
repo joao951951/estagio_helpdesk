@@ -139,7 +139,7 @@
         <script type="text/javascript">
             $(document).ready(function(){	
                 $("#cpf").mask("999.999.999-99");
-                $("#phone").mask("(99)999999999");
+                $("#phone").mask("99999999999");
             });
         </script>
     </x-slot>

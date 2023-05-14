@@ -55,7 +55,15 @@ class FuncionarioController extends Controller
                 'error' => "Você não tem permissão para criar novos técnicos"
             ]);
         }else{
-            if(Employee::where('cpf', $data['cpf'])->get()->get(0) == null && User::where('name', $data['userName'])->get()->get(0) == null && User::where('email', $data['userEmail'])->get()->get(0) == null){
+            if(Employee::where('cpf', $data['cpf'])->get()->get(0) != null){
+                return redirect()->route('funcionarios.index')->with([
+                    'error' => "O CPF fornecido já está em uso"
+                ]);
+            }else if(User::where('name', $data['userName'])->get()->get(0) != null){
+                return redirect()->route('funcionarios.index')->with([
+                    'error' => "O nome de usuário (login) fornecido já está em uso"
+                ]);
+            }else{
                 $user = User::create([
                     'name' => $data['userName'],
                     'email' => $data['userEmail'],
@@ -76,10 +84,6 @@ class FuncionarioController extends Controller
 
                 return redirect()->route('funcionarios.index')->with([
                     'success' => "{$employee->name} foi criado com sucesso"
-                ]);
-            }else{
-                return redirect()->route('funcionarios.index')->with([
-                    'error' => "Registro Duplicado"
                 ]);
             }
         }

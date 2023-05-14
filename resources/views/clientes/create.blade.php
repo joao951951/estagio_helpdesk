@@ -96,7 +96,6 @@
                                 type="email"
                                 placeholder="Digite o e-mail..."
                                 name="email"
-                                required
                             >
                         </div>
 
@@ -111,7 +110,6 @@
                                 type="text"
                                 placeholder="Digite o telefone..."
                                 name="phone"
-                                required
                             >
                         </div>
 
@@ -126,7 +124,6 @@
                                 type="text"
                                 placeholder="Digite o WhatsApp..."
                                 name="whatsapp"
-                                required
                             >
                         </div>
 
@@ -175,8 +172,8 @@
         <script type="text/javascript">
             $(document).ready(function(){	
                 $("#cnpj").mask("99.999.999/9999-99");
-                $("#phone").mask("(99)999999999");
-                $("#whatsapp").mask("(99)999999999");
+                $("#phone").mask("99999999999");
+                $("#whatsapp").mask("99999999999");
             });
         </script>
     </x-slot>
