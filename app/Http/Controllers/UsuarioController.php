@@ -28,16 +28,22 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
         $data = $request->except('_token');
-        $user = $this->user->create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'admin' => $data['admin']
-        ]);
+        if(User::where('name', $data['name'])->get()->get(0) != null){
+            return redirect()->route('administradores.index')->with([
+                'error' => "O nome de usuário {$data['name']} ja está em uso"
+            ]);
+        }else{
+            $user = $this->user->create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+                'admin' => $data['admin']
+            ]);
 
-        return redirect()->route('administradores.index')->with([
-            'success' => "{$user->name} foi criado com sucesso"
-        ]);
+            return redirect()->route('administradores.index')->with([
+                'success' => "{$user->name} foi criado com sucesso"
+            ]);
+        }
     }
 
     public function edit(User $admin)
@@ -48,11 +54,17 @@ class UsuarioController extends Controller
     public function update(User $admin, Request $request)
     {
         $data = $request->except(['_token', '_method']);
-        $admin->update($data);
+        if(User::where('name', $data['name'])->get()->get(0) != null){
+            return redirect()->route('administradores.index')->with([
+                'error' => "O nome de usuário {$data['name']} ja está em uso"
+            ]);
+        }else{
+            $admin->update($data);
 
-        return redirect()->route('administradores.index')->with([
-            'success' => "As informações do usuário {$admin->name} foram atualizados com sucesso"
-        ]);
+            return redirect()->route('administradores.index')->with([
+                'success' => "As informações do usuário {$admin->name} foram atualizados com sucesso"
+            ]);
+        }
     }
 
     public function changePassword(Request $request)
