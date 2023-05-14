@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class typeuser extends Model
+class Typeuser extends Model
 {
     use HasFactory;
     protected $table = 'typeuser';

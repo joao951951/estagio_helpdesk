@@ -24,6 +24,9 @@
     },
     "dependencies": {
         "jquery": "^3.6.1",
-        "jquery-mask-plugin": "^1.14.16"
+        "jquery-mask-plugin": "^1.14.16",
+        "json5": "^2.2.3",
+        "loader-utils": "^3.2.1",
+        "webpack": "^5.82.1"
     }
 }
